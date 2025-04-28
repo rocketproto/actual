@@ -33,7 +33,7 @@ export const defaultReport: CustomReportEntity = {
   conditionsOp: 'and',
 };
 
-const balanceTypeOptions = [
+const balanceTypeOptions = [ // here
   { description: t('Payment'), key: 'Payment', format: 'totalDebts' as const },
   { description: t('Deposit'), key: 'Deposit', format: 'totalAssets' as const },
   { description: t('Net'), key: 'Net', format: 'totalTotals' as const },
