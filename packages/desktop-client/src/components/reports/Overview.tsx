@@ -1,18 +1,12 @@
 import React, { useMemo, useState } from 'react';
-import {
-  Dialog,
-  DialogTrigger,
-  Tabs,
-  TabList,
-  Tab,
-  TabPanel,
-} from 'react-aria-components';
+import { Dialog, DialogTrigger } from 'react-aria-components';
 import { Responsive, WidthProvider, type Layout } from 'react-grid-layout';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { Trans, useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 
 import { Button } from '@actual-app/components/button';
+import { Tabs } from '@actual-app/components/tabs';
 import { useResponsive } from '@actual-app/components/hooks/useResponsive';
 import { SvgDotsHorizontalTriple } from '@actual-app/components/icons/v1';
 import { Menu } from '@actual-app/components/menu';
@@ -331,7 +325,7 @@ export function Overview() {
               marginRight: 15,
             }}
           >
-            <PageHeader title={t('Reports')} />
+            <PageHeader title={t('Reports HELLO')} />
 
             <View
               style={{
@@ -344,19 +338,6 @@ export function Overview() {
                 //  https://react-spectrum.adobe.com/react-aria/Tabs.html Consider Using Tabs for Dashboards
 
                 <>
-                  <Tabs>
-                    <TabList aria-label="History of Ancient Rome">
-                      <Tab id="FoR">Founding of Rome</Tab>
-                      <Tab id="MaR">Monarchy and Republic</Tab>
-                      <Tab id="Emp">Empire</Tab>
-                    </TabList>
-                    <TabPanel id="FoR">
-                      Arma virumque cano, Troiae qui primus ab oris.
-                    </TabPanel>
-                    <TabPanel id="MaR">Senatus Populusque Romanus.</TabPanel>
-                    <TabPanel id="Emp">Alea jacta est.</TabPanel>
-                  </Tabs>
-
                   <DialogTrigger>
                     <Button variant="primary" isDisabled={isImporting}>
                       <Trans>Add new widget</Trans>
@@ -513,80 +494,120 @@ export function Overview() {
       ) : (
         <View data-testid="reports-overview" style={{ userSelect: 'none' }}>
           {/* Tabs around this */}
-          <ResponsiveGridLayout
-            breakpoints={{ desktop: breakpoints.medium, mobile: 1 }}
-            layouts={{ desktop: layout, mobile: layout }}
-            onLayoutChange={
-              currentBreakpoint === 'desktop' ? onLayoutChange : undefined
-            }
-            onBreakpointChange={onBreakpointChange}
-            cols={{ desktop: 12, mobile: 1 }}
-            rowHeight={100}
-            draggableCancel={`.${NON_DRAGGABLE_AREA_CLASS_NAME}`}
-            isDraggable={currentBreakpoint === 'desktop' && isEditing}
-            isResizable={currentBreakpoint === 'desktop' && isEditing}
-          >
-            {layout.map(item => (
-              <div key={item.i}>
-                {item.type === 'net-worth-card' ? (
-                  <NetWorthCard
-                    widgetId={item.i}
-                    isEditing={isEditing}
-                    accounts={accounts}
-                    meta={item.meta}
-                    onMetaChange={newMeta => onMetaChange(item, newMeta)}
-                    onRemove={() => onRemoveWidget(item.i)}
-                  />
-                ) : item.type === 'cash-flow-card' ? (
-                  <CashFlowCard
-                    widgetId={item.i}
-                    isEditing={isEditing}
-                    meta={item.meta}
-                    onMetaChange={newMeta => onMetaChange(item, newMeta)}
-                    onRemove={() => onRemoveWidget(item.i)}
-                  />
-                ) : item.type === 'spending-card' ? (
-                  <SpendingCard
-                    widgetId={item.i}
-                    isEditing={isEditing}
-                    meta={item.meta}
-                    onMetaChange={newMeta => onMetaChange(item, newMeta)}
-                    onRemove={() => onRemoveWidget(item.i)}
-                  />
-                ) : item.type === 'markdown-card' ? (
-                  <MarkdownCard
-                    isEditing={isEditing}
-                    meta={item.meta}
-                    onMetaChange={newMeta => onMetaChange(item, newMeta)}
-                    onRemove={() => onRemoveWidget(item.i)}
-                  />
-                ) : item.type === 'custom-report' ? (
-                  <CustomReportListCards
-                    isEditing={isEditing}
-                    report={customReportMap.get(item.meta.id)}
-                    onRemove={() => onRemoveWidget(item.i)}
-                  />
-                ) : item.type === 'summary-card' ? (
-                  <SummaryCard
-                    widgetId={item.i}
-                    isEditing={isEditing}
-                    meta={item.meta}
-                    onMetaChange={newMeta => onMetaChange(item, newMeta)}
-                    onRemove={() => onRemoveWidget(item.i)}
-                  />
-                ) : item.type === 'calendar-card' ? (
-                  <CalendarCard
-                    widgetId={item.i}
-                    isEditing={isEditing}
-                    meta={item.meta}
-                    firstDayOfWeekIdx={firstDayOfWeekIdx}
-                    onMetaChange={newMeta => onMetaChange(item, newMeta)}
-                    onRemove={() => onRemoveWidget(item.i)}
-                  />
-                ) : null}
-              </div>
-            ))}
-          </ResponsiveGridLayout>
+          <Tabs
+            style={{}}
+            tabs={[
+              {
+                header: 'Reports',
+                id: 'Reports',
+                panel: (
+                  <ResponsiveGridLayout
+                    breakpoints={{ desktop: breakpoints.medium, mobile: 1 }}
+                    layouts={{ desktop: layout, mobile: layout }}
+                    onLayoutChange={
+                      currentBreakpoint === 'desktop'
+                        ? onLayoutChange
+                        : undefined
+                    }
+                    onBreakpointChange={onBreakpointChange}
+                    cols={{ desktop: 12, mobile: 1 }}
+                    rowHeight={100}
+                    draggableCancel={`.${NON_DRAGGABLE_AREA_CLASS_NAME}`}
+                    isDraggable={currentBreakpoint === 'desktop' && isEditing}
+                    isResizable={currentBreakpoint === 'desktop' && isEditing}
+                  >
+                    {layout.map(item => (
+                      <div key={item.i}>
+                        {item.type === 'net-worth-card' ? (
+                          <NetWorthCard
+                            widgetId={item.i}
+                            isEditing={isEditing}
+                            accounts={accounts}
+                            meta={item.meta}
+                            onMetaChange={newMeta =>
+                              onMetaChange(item, newMeta)
+                            }
+                            onRemove={() => onRemoveWidget(item.i)}
+                          />
+                        ) : item.type === 'cash-flow-card' ? (
+                          <CashFlowCard
+                            widgetId={item.i}
+                            isEditing={isEditing}
+                            meta={item.meta}
+                            onMetaChange={newMeta =>
+                              onMetaChange(item, newMeta)
+                            }
+                            onRemove={() => onRemoveWidget(item.i)}
+                          />
+                        ) : item.type === 'spending-card' ? (
+                          <SpendingCard
+                            widgetId={item.i}
+                            isEditing={isEditing}
+                            meta={item.meta}
+                            onMetaChange={newMeta =>
+                              onMetaChange(item, newMeta)
+                            }
+                            onRemove={() => onRemoveWidget(item.i)}
+                          />
+                        ) : item.type === 'markdown-card' ? (
+                          <MarkdownCard
+                            isEditing={isEditing}
+                            meta={item.meta}
+                            onMetaChange={newMeta =>
+                              onMetaChange(item, newMeta)
+                            }
+                            onRemove={() => onRemoveWidget(item.i)}
+                          />
+                        ) : item.type === 'custom-report' ? (
+                          <CustomReportListCards
+                            isEditing={isEditing}
+                            report={customReportMap.get(item.meta.id)}
+                            onRemove={() => onRemoveWidget(item.i)}
+                          />
+                        ) : item.type === 'summary-card' ? (
+                          <SummaryCard
+                            widgetId={item.i}
+                            isEditing={isEditing}
+                            meta={item.meta}
+                            onMetaChange={newMeta =>
+                              onMetaChange(item, newMeta)
+                            }
+                            onRemove={() => onRemoveWidget(item.i)}
+                          />
+                        ) : item.type === 'calendar-card' ? (
+                          <CalendarCard
+                            widgetId={item.i}
+                            isEditing={isEditing}
+                            meta={item.meta}
+                            firstDayOfWeekIdx={firstDayOfWeekIdx}
+                            onMetaChange={newMeta =>
+                              onMetaChange(item, newMeta)
+                            }
+                            onRemove={() => onRemoveWidget(item.i)}
+                          />
+                        ) : null}
+                      </div>
+                    ))}
+                  </ResponsiveGridLayout>
+                ),
+              },
+              {
+                header: 'Weekly',
+                id: 'Weekly',
+                panel: 'Weekly Panel',
+              },
+              {
+                header: 'Monthy',
+                id: 'Monthly',
+                panel: 'Monthly Panel',
+              },
+              {
+                header: '+',
+                id: 'New Dashboard',
+                panel: '',
+              },
+            ]}
+          ></Tabs>
         </View>
       )}
     </Page>
