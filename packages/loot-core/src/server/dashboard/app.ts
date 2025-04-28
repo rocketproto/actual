@@ -244,7 +244,7 @@ async function importDashboard({ filepath }: { filepath: string }) {
 }
 
 export type DashboardHandlers = {
-  'dashboard-update': typeof updateDashboard;
+  'dashboard-update': typeof updateDashboard; // Here
   'dashboard-update-widget': typeof updateDashboardWidget;
   'dashboard-reset': typeof resetDashboard;
   'dashboard-add-widget': typeof addDashboardWidget;

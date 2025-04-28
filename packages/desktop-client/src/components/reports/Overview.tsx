@@ -6,6 +6,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 
 import { Button } from '@actual-app/components/button';
+import { Tabs } from '@actual-app/components/tabs';
 import { useResponsive } from '@actual-app/components/hooks/useResponsive';
 import { SvgDotsHorizontalTriple } from '@actual-app/components/icons/v1';
 import { Menu } from '@actual-app/components/menu';
@@ -150,6 +151,8 @@ export function Overview() {
     if (!isEditing) {
       return;
     }
+
+    // Here
 
     send(
       'dashboard-update',
@@ -322,7 +325,7 @@ export function Overview() {
               marginRight: 15,
             }}
           >
-            <PageHeader title={t('Reports')} />
+            <PageHeader title={t('Reports HELLO')} />
 
             <View
               style={{
@@ -332,6 +335,8 @@ export function Overview() {
               }}
             >
               {currentBreakpoint === 'desktop' && (
+                //  https://react-spectrum.adobe.com/react-aria/Tabs.html Consider Using Tabs for Dashboards
+
                 <>
                   <DialogTrigger>
                     <Button variant="primary" isDisabled={isImporting}>
@@ -417,7 +422,7 @@ export function Overview() {
                       isDisabled={isImporting}
                       onPress={() => setIsEditing(false)}
                     >
-                      <Trans>Finish editing dashboard</Trans>
+                      <Trans>Finish editing dashboard HERE</Trans>
                     </Button>
                   ) : (
                     <Button
@@ -488,80 +493,121 @@ export function Overview() {
         <LoadingIndicator message={t('Import is running...')} />
       ) : (
         <View data-testid="reports-overview" style={{ userSelect: 'none' }}>
-          <ResponsiveGridLayout
-            breakpoints={{ desktop: breakpoints.medium, mobile: 1 }}
-            layouts={{ desktop: layout, mobile: layout }}
-            onLayoutChange={
-              currentBreakpoint === 'desktop' ? onLayoutChange : undefined
-            }
-            onBreakpointChange={onBreakpointChange}
-            cols={{ desktop: 12, mobile: 1 }}
-            rowHeight={100}
-            draggableCancel={`.${NON_DRAGGABLE_AREA_CLASS_NAME}`}
-            isDraggable={currentBreakpoint === 'desktop' && isEditing}
-            isResizable={currentBreakpoint === 'desktop' && isEditing}
-          >
-            {layout.map(item => (
-              <div key={item.i}>
-                {item.type === 'net-worth-card' ? (
-                  <NetWorthCard
-                    widgetId={item.i}
-                    isEditing={isEditing}
-                    accounts={accounts}
-                    meta={item.meta}
-                    onMetaChange={newMeta => onMetaChange(item, newMeta)}
-                    onRemove={() => onRemoveWidget(item.i)}
-                  />
-                ) : item.type === 'cash-flow-card' ? (
-                  <CashFlowCard
-                    widgetId={item.i}
-                    isEditing={isEditing}
-                    meta={item.meta}
-                    onMetaChange={newMeta => onMetaChange(item, newMeta)}
-                    onRemove={() => onRemoveWidget(item.i)}
-                  />
-                ) : item.type === 'spending-card' ? (
-                  <SpendingCard
-                    widgetId={item.i}
-                    isEditing={isEditing}
-                    meta={item.meta}
-                    onMetaChange={newMeta => onMetaChange(item, newMeta)}
-                    onRemove={() => onRemoveWidget(item.i)}
-                  />
-                ) : item.type === 'markdown-card' ? (
-                  <MarkdownCard
-                    isEditing={isEditing}
-                    meta={item.meta}
-                    onMetaChange={newMeta => onMetaChange(item, newMeta)}
-                    onRemove={() => onRemoveWidget(item.i)}
-                  />
-                ) : item.type === 'custom-report' ? (
-                  <CustomReportListCards
-                    isEditing={isEditing}
-                    report={customReportMap.get(item.meta.id)}
-                    onRemove={() => onRemoveWidget(item.i)}
-                  />
-                ) : item.type === 'summary-card' ? (
-                  <SummaryCard
-                    widgetId={item.i}
-                    isEditing={isEditing}
-                    meta={item.meta}
-                    onMetaChange={newMeta => onMetaChange(item, newMeta)}
-                    onRemove={() => onRemoveWidget(item.i)}
-                  />
-                ) : item.type === 'calendar-card' ? (
-                  <CalendarCard
-                    widgetId={item.i}
-                    isEditing={isEditing}
-                    meta={item.meta}
-                    firstDayOfWeekIdx={firstDayOfWeekIdx}
-                    onMetaChange={newMeta => onMetaChange(item, newMeta)}
-                    onRemove={() => onRemoveWidget(item.i)}
-                  />
-                ) : null}
-              </div>
-            ))}
-          </ResponsiveGridLayout>
+          {/* Tabs around this */}
+          <Tabs
+            style={{}}
+            tabs={[
+              {
+                header: 'Reports',
+                id: 'Reports',
+                panel: (
+                  <ResponsiveGridLayout
+                    breakpoints={{ desktop: breakpoints.medium, mobile: 1 }}
+                    layouts={{ desktop: layout, mobile: layout }}
+                    onLayoutChange={
+                      currentBreakpoint === 'desktop'
+                        ? onLayoutChange
+                        : undefined
+                    }
+                    onBreakpointChange={onBreakpointChange}
+                    cols={{ desktop: 12, mobile: 1 }}
+                    rowHeight={100}
+                    draggableCancel={`.${NON_DRAGGABLE_AREA_CLASS_NAME}`}
+                    isDraggable={currentBreakpoint === 'desktop' && isEditing}
+                    isResizable={currentBreakpoint === 'desktop' && isEditing}
+                  >
+                    {layout.map(item => (
+                      <div key={item.i}>
+                        {item.type === 'net-worth-card' ? (
+                          <NetWorthCard
+                            widgetId={item.i}
+                            isEditing={isEditing}
+                            accounts={accounts}
+                            meta={item.meta}
+                            onMetaChange={newMeta =>
+                              onMetaChange(item, newMeta)
+                            }
+                            onRemove={() => onRemoveWidget(item.i)}
+                          />
+                        ) : item.type === 'cash-flow-card' ? (
+                          <CashFlowCard
+                            widgetId={item.i}
+                            isEditing={isEditing}
+                            meta={item.meta}
+                            onMetaChange={newMeta =>
+                              onMetaChange(item, newMeta)
+                            }
+                            onRemove={() => onRemoveWidget(item.i)}
+                          />
+                        ) : item.type === 'spending-card' ? (
+                          <SpendingCard
+                            widgetId={item.i}
+                            isEditing={isEditing}
+                            meta={item.meta}
+                            onMetaChange={newMeta =>
+                              onMetaChange(item, newMeta)
+                            }
+                            onRemove={() => onRemoveWidget(item.i)}
+                          />
+                        ) : item.type === 'markdown-card' ? (
+                          <MarkdownCard
+                            isEditing={isEditing}
+                            meta={item.meta}
+                            onMetaChange={newMeta =>
+                              onMetaChange(item, newMeta)
+                            }
+                            onRemove={() => onRemoveWidget(item.i)}
+                          />
+                        ) : item.type === 'custom-report' ? (
+                          <CustomReportListCards
+                            isEditing={isEditing}
+                            report={customReportMap.get(item.meta.id)}
+                            onRemove={() => onRemoveWidget(item.i)}
+                          />
+                        ) : item.type === 'summary-card' ? (
+                          <SummaryCard
+                            widgetId={item.i}
+                            isEditing={isEditing}
+                            meta={item.meta}
+                            onMetaChange={newMeta =>
+                              onMetaChange(item, newMeta)
+                            }
+                            onRemove={() => onRemoveWidget(item.i)}
+                          />
+                        ) : item.type === 'calendar-card' ? (
+                          <CalendarCard
+                            widgetId={item.i}
+                            isEditing={isEditing}
+                            meta={item.meta}
+                            firstDayOfWeekIdx={firstDayOfWeekIdx}
+                            onMetaChange={newMeta =>
+                              onMetaChange(item, newMeta)
+                            }
+                            onRemove={() => onRemoveWidget(item.i)}
+                          />
+                        ) : null}
+                      </div>
+                    ))}
+                  </ResponsiveGridLayout>
+                ),
+              },
+              {
+                header: 'Weekly',
+                id: 'Weekly',
+                panel: 'Weekly Panel',
+              },
+              {
+                header: 'Monthy',
+                id: 'Monthly',
+                panel: 'Monthly Panel',
+              },
+              {
+                header: '+',
+                id: 'New Dashboard',
+                panel: '',
+              },
+            ]}
+          ></Tabs>
         </View>
       )}
     </Page>

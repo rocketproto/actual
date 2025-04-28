@@ -1,5 +1,6 @@
 import { type CustomReportEntity } from './reports';
 import { type RuleConditionEntity } from './rule';
+import { type Layout } from 'react-grid-layout';
 
 export type TimeFrame = {
   start: string;
@@ -70,6 +71,8 @@ type SpecializedWidget =
   | CalendarWidget;
 export type Widget = SpecializedWidget | CustomReportWidget;
 export type NewWidget = Omit<Widget, 'id' | 'tombstone'>;
+
+export type ActualDashboard = Map<string, Layout[]>;
 
 // Exported/imported (json) widget definition
 export type ExportImportCustomReportWidget = Omit<
