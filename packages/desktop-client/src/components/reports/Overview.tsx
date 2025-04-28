@@ -1,5 +1,12 @@
 import React, { useMemo, useState } from 'react';
-import { Dialog, DialogTrigger } from 'react-aria-components';
+import {
+  Dialog,
+  DialogTrigger,
+  Tabs,
+  TabList,
+  Tab,
+  TabPanel,
+} from 'react-aria-components';
 import { Responsive, WidthProvider, type Layout } from 'react-grid-layout';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { Trans, useTranslation } from 'react-i18next';
@@ -150,6 +157,8 @@ export function Overview() {
     if (!isEditing) {
       return;
     }
+
+    // Here
 
     send(
       'dashboard-update',
@@ -332,7 +341,22 @@ export function Overview() {
               }}
             >
               {currentBreakpoint === 'desktop' && (
+                //  https://react-spectrum.adobe.com/react-aria/Tabs.html Consider Using Tabs for Dashboards
+
                 <>
+                  <Tabs>
+                    <TabList aria-label="History of Ancient Rome">
+                      <Tab id="FoR">Founding of Rome</Tab>
+                      <Tab id="MaR">Monarchy and Republic</Tab>
+                      <Tab id="Emp">Empire</Tab>
+                    </TabList>
+                    <TabPanel id="FoR">
+                      Arma virumque cano, Troiae qui primus ab oris.
+                    </TabPanel>
+                    <TabPanel id="MaR">Senatus Populusque Romanus.</TabPanel>
+                    <TabPanel id="Emp">Alea jacta est.</TabPanel>
+                  </Tabs>
+
                   <DialogTrigger>
                     <Button variant="primary" isDisabled={isImporting}>
                       <Trans>Add new widget</Trans>
@@ -417,7 +441,7 @@ export function Overview() {
                       isDisabled={isImporting}
                       onPress={() => setIsEditing(false)}
                     >
-                      <Trans>Finish editing dashboard</Trans>
+                      <Trans>Finish editing dashboard HERE</Trans>
                     </Button>
                   ) : (
                     <Button
@@ -488,6 +512,7 @@ export function Overview() {
         <LoadingIndicator message={t('Import is running...')} />
       ) : (
         <View data-testid="reports-overview" style={{ userSelect: 'none' }}>
+          {/* Tabs around this */}
           <ResponsiveGridLayout
             breakpoints={{ desktop: breakpoints.medium, mobile: 1 }}
             layouts={{ desktop: layout, mobile: layout }}
